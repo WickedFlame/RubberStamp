@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>RubberStamp</id>
+    <version>$version$</version>
+    <title>WickedFlame RubberStamp</title>
+    <authors>Christian Walpen</authors>
+    <owners>Christian Walpen</owners>
+    <licenseUrl>https://github.com/WickedFlame/RubberStamp/raw/master/License.txt</licenseUrl>
+    <projectUrl>http://wickedflame.github.io/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Simple Validation Component for .NET</description>
+    <summary >
+          Simple Validation Component for .NET
+    </summary>
+    <releaseNotes>
+    </releaseNotes>
+    <copyright>WickedFlame</copyright>
+    <dependencies>
+    </dependencies>
+    <frameworkAssemblies>
+
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+    <file src="RubberStamp.dll" target="lib\net452\" />
+    <file src="RubberStamp.xml" target="lib\net452\" />
+  </files>
+</package>
