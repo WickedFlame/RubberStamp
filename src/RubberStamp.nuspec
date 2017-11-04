@@ -23,7 +23,7 @@
     </frameworkAssemblies>
   </metadata>
   <files>
-    <file src="RubberStamp.dll" target="lib\net452\" />
-    <file src="RubberStamp.xml" target="lib\net452\" />
+    <file src="RubberStamp\bin\Release\RubberStamp.dll" target="lib\net452\RubberStamp.dll" />
+    <file src="RubberStamp\bin\Release\RubberStamp.xml" target="lib\net452\RubberStamp.xml" />
   </files>
 </package>
