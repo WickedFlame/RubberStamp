@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using RubberStamp.Rules;
 using NUnit.Framework;
+using RubberStamp.Conditions;
 
 namespace RubberStamp.UnitTest
 {
@@ -10,43 +11,51 @@ namespace RubberStamp.UnitTest
         [Test]
         public void RubberStamp_Validator_AddRule_Test()
         {
-            IValidator<TestClass> validator = new Validator<TestClass>();
-            var rule = validator.AddRule(new ValidationRule<TestClass, string>(p => p.Name));
+            var rule = new ValidationRule<TestClass, string>(p => p.Name)
+                .AddCondition(new IsNotNullCondition<TestClass, string>(p => p.Name));
+
+            IValidator<TestClass> validator = new Validator<TestClass>()
+                .AddRule(rule);
 
             Assert.AreSame(rule, validator.Rules.Single());
+            Assert.That(validator.Rules.Single().Conditions.Single(), Is.Not.Null);
         }
 
         [Test]
         public void RubberStamp_Validator_AddRuleByObjectExpression_Test()
         {
             IValidator<TestClass> validator = new Validator<TestClass>();
-            var rule = validator.AddRule(p => p.Name == string.Empty, "This is a error message");
+            validator.AddRule(p => p.Name == string.Empty, "This is a error message");
 
-            Assert.AreSame(rule, validator.Rules.Single());
+            var rule = validator.Rules.Single();
+            Assert.That(rule, Is.Not.Null);
+            Assert.That(rule.Conditions.Single(), Is.Not.Null);
         }
 
         [Test]
         public void RubberStamp_Validator_AddRuleByExpressionAndCondition_Test()
         {
             IValidator<TestClass> validator = new Validator<TestClass>();
-            var rule = validator.AddRule(p => p.Name, con => con.IsNotNull());
+            validator.AddRule(p => p.Name, con => con.IsNotNull());
 
-            Assert.AreSame(rule, validator.Rules.Single());
+            var rule = validator.Rules.Single();
+            Assert.That(rule, Is.Not.Null);
+            Assert.That(rule.Conditions.Single(), Is.Not.Null);
         }
 
         [Test]
         public void RubberStamp_Validator_AddRuleByExpressionAndConditions_Test()
         {
             IValidator<TestClass> validator = new Validator<TestClass>();
-            var rule = validator.AddRule(p => p.Name, con => con.IsNotNull(), con => con.IsEqual("Test"));
+            validator.AddRule(p => p.Name, con => con.Conditions(c=> c.IsNotNull(), c => c.IsEqual("Test")));
 
-            Assert.AreSame(rule, validator.Rules.Single());
+            var rule = validator.Rules.Single();
+            Assert.That(rule, Is.Not.Null);
+            Assert.That(rule.Conditions.Count(), Is.EqualTo(2));
         }
-        
-        // ReSharper disable once ClassNeverInstantiated.Local
+
         private class TestClass
         {
-            // ReSharper disable once UnusedAutoPropertyAccessor.Local
             public string Name { get; set; }
         }
     }

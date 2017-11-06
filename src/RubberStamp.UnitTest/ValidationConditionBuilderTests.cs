@@ -13,7 +13,7 @@ namespace RubberStamp.UnitTest
             var rule = new Validator<TestClass>()
                 .AddRule(p => p.Name, con => con.IsNotNull());
 
-            Assert.IsInstanceOf<IsNotNullCondition<TestClass, string>>(rule.Conditions.First());
+            Assert.IsInstanceOf<IsNotNullCondition<TestClass, string>>(rule.Rules.First().Conditions.First());
         }
 
         [Test]
@@ -22,7 +22,7 @@ namespace RubberStamp.UnitTest
             var rule = new Validator<TestClass>()
                 .AddRule(p => p.Name, con => con.IsNull());
 
-            Assert.IsInstanceOf<IsNullCondition<TestClass, string>>(rule.Conditions.First());
+            Assert.IsInstanceOf<IsNullCondition<TestClass, string>>(rule.Rules.First().Conditions.First());
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace RubberStamp.UnitTest
             var rule = new Validator<TestClass>()
                 .AddRule(p => p.Index, con => con.GreaterThan(1));
 
-            Assert.IsInstanceOf<GreaterThanCondition<TestClass, int>>(rule.Conditions.First());
+            Assert.IsInstanceOf<GreaterThanCondition<TestClass, int>>(rule.Rules.First().Conditions.First());
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace RubberStamp.UnitTest
             var rule = new Validator<TestClass>()
                 .AddRule(p => p.Index, con => con.GreaterOrEqualThan(1));
 
-            Assert.IsInstanceOf<GreaterOrEqualThanCondition<TestClass, int>>(rule.Conditions.First());
+            Assert.IsInstanceOf<GreaterOrEqualThanCondition<TestClass, int>>(rule.Rules.First().Conditions.First());
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace RubberStamp.UnitTest
             var rule = new Validator<TestClass>()
                 .AddRule(p => p.Index, con => con.LessThan(1));
 
-            Assert.IsInstanceOf<LessThanCondition<TestClass, int>>(rule.Conditions.First());
+            Assert.IsInstanceOf<LessThanCondition<TestClass, int>>(rule.Rules.First().Conditions.First());
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace RubberStamp.UnitTest
             var rule = new Validator<TestClass>()
                 .AddRule(p => p.Index, con => con.LessOrEqualThan(1));
 
-            Assert.IsInstanceOf<LessOrEqualThanCondition<TestClass, int>>(rule.Conditions.First());
+            Assert.IsInstanceOf<LessOrEqualThanCondition<TestClass, int>>(rule.Rules.First().Conditions.First());
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace RubberStamp.UnitTest
             var rule = new Validator<TestClass>()
                 .AddRule(p => p.Index, con => con.IsEqual(1));
 
-            Assert.IsInstanceOf<IsEqualCondition<TestClass, int>>(rule.Conditions.First());
+            Assert.IsInstanceOf<IsEqualCondition<TestClass, int>>(rule.Rules.First().Conditions.First());
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace RubberStamp.UnitTest
             var rule = new Validator<TestClass>()
                 .AddRule(p => p.Index, con => con.IsNotEqual(1));
 
-            Assert.IsInstanceOf<IsNotEqualCondition<TestClass, int>>(rule.Conditions.First());
+            Assert.IsInstanceOf<IsNotEqualCondition<TestClass, int>>(rule.Rules.First().Conditions.First());
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace RubberStamp.UnitTest
             var rule = new Validator<TestClass>()
                 .AddRule(p => p.Index, con => con.LengthLessOrEqualThan(1));
 
-            Assert.IsInstanceOf<LengthLessOrEqualThanCondition<TestClass, int>>(rule.Conditions.First());
+            Assert.IsInstanceOf<LengthLessOrEqualThanCondition<TestClass, int>>(rule.Rules.First().Conditions.First());
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace RubberStamp.UnitTest
             var rule = new Validator<TestClass>()
                 .AddRule(p => p.Email, con => con.IsValidEmailFormat());
 
-            Assert.IsInstanceOf<IsValidEmailFormatCondition<TestClass, string>>(rule.Conditions.First());
+            Assert.IsInstanceOf<IsValidEmailFormatCondition<TestClass, string>>(rule.Rules.First().Conditions.First());
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace RubberStamp.UnitTest
             var rule = new Validator<TestClass>()
                 .AddRule(p => p.Email, con => con.Regex(@"^[a-zA-Z]"));
 
-            Assert.IsInstanceOf<RegexCondition<TestClass, string>>(rule.Conditions.First());
+            Assert.IsInstanceOf<RegexCondition<TestClass, string>>(rule.Rules.First().Conditions.First());
         }
 
         // ReSharper disable once ClassNeverInstantiated.Local

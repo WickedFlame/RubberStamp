@@ -56,7 +56,7 @@ namespace RubberStamp.UnitTest.Integration
         public void RubberStamp_Validator_InheritedValidator_Extended_Rule_CustomMessage_Invalid_Test()
         {
             var validator = new PersonValidator();
-            validator.AddRule(p => p.City, con => con.IsEqual("Mexico City")).SetMessage("The City has to be Mexico City");
+            validator.AddRule(p => p.City, con => con.IsEqual("Mexico City"), r => r.SetMessage("The City has to be Mexico City"));
             var summary = validator.Validate(new Person("Taylor", "Ted", "New York"));
 
             Assert.IsFalse(summary.IsValid);
@@ -67,7 +67,7 @@ namespace RubberStamp.UnitTest.Integration
         public void RubberStamp_Validator_InheritedValidator_Extended_Rule_WithWhen_Valid_Test()
         {
             var validator = new PersonValidator();
-            validator.AddRule(p => p.City, con => con.IsEqual("Mexico City")).When(p => p.Firstname != "Ted");
+            validator.AddRule(p => p.City, con => con.IsEqual("Mexico City"), r => r.When(p => p.Firstname != "Ted"));
             var summary = validator.Validate(new Person("Taylor", "Ted", "New York"));
 
             Assert.IsTrue(summary.IsValid);

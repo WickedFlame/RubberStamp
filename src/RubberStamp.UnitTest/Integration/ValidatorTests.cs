@@ -25,9 +25,22 @@ namespace RubberStamp.UnitTest.Integration
         [Test]
         public void Validation_Integration_Validator_MultiCondition_Test()
         {
-            var validator = new Validator<TestClass>();
-            validator.AddRule(p => p.Index, con => con.GreaterThan(1), con => con.LessThan(10));
+            var validator = new Validator<TestClass>()
+                .AddRule(p => p.Index, con => con.Conditions(c => c.GreaterThan(1), c => c.LessThan(10)));
             
+            var summary = validator.Validate(new TestClass());
+
+            Assert.IsTrue(summary.ValidationResults.Any());
+            Assert.IsFalse(summary.IsValid);
+        }
+
+        [Test]
+        public void Validation_Integration_Validator_MultiCondition_Test2()
+        {
+            var validator = new Validator<TestClass>()
+                .AddRule(p => p.Index, con => con.Conditions(c => c.GreaterThan(1), c => c.LessThan(10)))
+                .AddRule(p => p.Index, con => con.Conditions(c => c.GreaterThan(1)));
+
             var summary = validator.Validate(new TestClass());
 
             Assert.IsTrue(summary.ValidationResults.Any());
@@ -201,9 +214,9 @@ namespace RubberStamp.UnitTest.Integration
         [Test]
         public void Validation_Integration_Validator_CustomMessage_Test()
         {
-            var validator = new Validator<TestClass>();
-            validator.AddRule(p => p.Name, con => con.IsNotNull())
-                .SetMessage("This is a custom message");
+            var validator = new Validator<TestClass>()
+                .AddRule(p => p.Name, con => con.IsNotNull(), ext => ext.SetMessage("This is a custom message"))
+                .AddRule(p => p.Index, con => con.GreaterThan(5));
             
             var summary = validator.Validate(new TestClass());
 
@@ -257,7 +270,7 @@ namespace RubberStamp.UnitTest.Integration
         public void Validation_Integration_Validator_WithSubObject_WithWhen_Test()
         {
             var validator = new Validator<Person>();
-            validator.AddRule(p => p.Address.City, con => con.IsNotNull()).When(p => p.Address != null);
+            validator.AddRule(p => p.Address.City, con => con.IsNotNull(), r => r.When(p => p.Address != null));
             
             var summary = validator.Validate(new Person());
 
@@ -268,7 +281,7 @@ namespace RubberStamp.UnitTest.Integration
         public void Validation_Integration_Validator_WithSubObject_WithWhen_Invalid_Test()
         {
             var validator = new Validator<Person>();
-            validator.AddRule(p => p.Address.City, con => con.IsNotNull()).When(p => p.Address != null);
+            validator.AddRule(p => p.Address.City, con => con.IsNotNull(), r => r.When(p => p.Address != null));
 
             var person = new Person
             {
@@ -283,7 +296,7 @@ namespace RubberStamp.UnitTest.Integration
         public void Validation_Integration_Validator_WithSubObject_WithWhen_Valid_Test()
         {
             var validator = new Validator<Person>();
-            validator.AddRule(p => p.Address.City, con => con.IsNotNull()).When(p => p.Address != null);
+            validator.AddRule(p => p.Address.City, con => con.IsNotNull(), r => r.When(p => p.Address != null));
 
             var person = new Person
             {
@@ -617,7 +630,7 @@ namespace RubberStamp.UnitTest.Integration
         public void RubberStamp_Integration_Validator_SetMessageOnCondition_MultiCondition_Test()
         {
             var validator = new Validator<TestClass>();
-            validator.AddRule(p => p.Index, con => con.GreaterThan(10).SetMessage("Error message 1"), con => con.LessThan(1).SetMessage("Error message 2"));
+            validator.AddRule(p => p.Index, con => con.Conditions(c=> c.GreaterThan(10).SetMessage("Error message 1"), c => c.LessThan(1).SetMessage("Error message 2")));
 
             var summary = validator.Validate(new TestClass { Index = 5 });
 

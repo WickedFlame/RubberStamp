@@ -10,20 +10,20 @@ namespace RubberStamp.UnitTest
         [Test]
         public void RubberStamp_ValidationConditionBuilderOfT_Condition_Test()
         {
-            var rule = new Validator<TestClass>()
+            var validator = new Validator<TestClass>()
                 .AddRule(p => p.Index, con => con.Condition((t, p) => p > 10));
 
-            Assert.IsInstanceOf<CustomPropertyCondition<TestClass, int>>(rule.Conditions.First());
+            Assert.IsInstanceOf<CustomPropertyCondition<TestClass, int>>(validator.Rules.First().Conditions.First());
         }
 
         [Test]
         public void RubberStamp_ValidationConditionBuilderOfT_ConditionWithExternalValue_Test()
         {
             var name = "test";
-            var rule = new Validator<TestClass>()
+            var validator = new Validator<TestClass>()
                 .AddRule(p => p.Name, con => con.Condition((t, p) => p == name));
 
-            Assert.IsInstanceOf<CustomPropertyCondition<TestClass, string>>(rule.Conditions.First());
+            Assert.IsInstanceOf<CustomPropertyCondition<TestClass, string>>(validator.Rules.First().Conditions.First());
         }
 
         // ReSharper disable once ClassNeverInstantiated.Local
